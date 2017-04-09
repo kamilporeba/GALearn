@@ -1,0 +1,16 @@
+//
+//  GALearn-Prefix.pch
+//  GALearn
+//
+//  Created by Kamil Poreba on 09.04.2017.
+//  Copyright © 2017 Kamil Poreba. All rights reserved.
+//
+
+#ifndef GALearn_Prefix_pch
+#define GALearn_Prefix_pch
+#define GENE_LENGTH 12*32
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* GALearn_Prefix_pch */

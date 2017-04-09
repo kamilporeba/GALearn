@@ -13,9 +13,19 @@
 		8E4B059A1E607F070046D1DB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4B05981E607F070046D1DB /* Main.storyboard */; };
 		8E4B059C1E607F070046D1DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E4B059B1E607F070046D1DB /* Assets.xcassets */; };
 		8E4B059F1E607F070046D1DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4B059D1E607F070046D1DB /* LaunchScreen.storyboard */; };
+		8E4B05A81E6080F20046D1DB /* CustomizableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4B05A71E6080F20046D1DB /* CustomizableView.m */; };
+		8EF565121E92BDB100311A02 /* CarCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF565111E92BDB100311A02 /* CarCollectionViewCell.m */; };
+		8EF565151E92C49200311A02 /* Alghoritm.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF565141E92C49200311A02 /* Alghoritm.m */; };
+		8EF580BF1E6F584D0003BF47 /* BinaryFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF580BE1E6F584D0003BF47 /* BinaryFormatter.m */; };
+		8EF931851E94324B00206AFB /* ContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF931831E94324B00206AFB /* ContentViewController.m */; };
+		8EF931861E94324B00206AFB /* ContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF931841E94324B00206AFB /* ContentViewController.xib */; };
+		8EF997231E65E00B00CB6DB3 /* FourPointEditableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF997221E65E00B00CB6DB3 /* FourPointEditableView.m */; };
+		8EF997261E66022800CB6DB3 /* CarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF997251E66022800CB6DB3 /* CarView.m */; };
+		8EF997291E66051100CB6DB3 /* Wheel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF997281E66051100CB6DB3 /* Wheel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8E0FF8AD1E9A6114004FE5B3 /* GALearn-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GALearn-Prefix.pch"; sourceTree = "<group>"; };
 		8E4B058C1E607F070046D1DB /* GALearn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GALearn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4B05901E607F070046D1DB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8E4B05921E607F070046D1DB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -26,6 +36,23 @@
 		8E4B059B1E607F070046D1DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8E4B059E1E607F070046D1DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8E4B05A01E607F070046D1DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8E4B05A61E6080F20046D1DB /* CustomizableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomizableView.h; sourceTree = "<group>"; };
+		8E4B05A71E6080F20046D1DB /* CustomizableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomizableView.m; sourceTree = "<group>"; };
+		8EF565101E92BDB100311A02 /* CarCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarCollectionViewCell.h; sourceTree = "<group>"; };
+		8EF565111E92BDB100311A02 /* CarCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarCollectionViewCell.m; sourceTree = "<group>"; };
+		8EF565131E92C49200311A02 /* Alghoritm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alghoritm.h; sourceTree = "<group>"; };
+		8EF565141E92C49200311A02 /* Alghoritm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alghoritm.m; sourceTree = "<group>"; };
+		8EF580BD1E6F584D0003BF47 /* BinaryFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinaryFormatter.h; sourceTree = "<group>"; };
+		8EF580BE1E6F584D0003BF47 /* BinaryFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BinaryFormatter.m; sourceTree = "<group>"; };
+		8EF931821E94324B00206AFB /* ContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentViewController.h; sourceTree = "<group>"; };
+		8EF931831E94324B00206AFB /* ContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentViewController.m; sourceTree = "<group>"; };
+		8EF931841E94324B00206AFB /* ContentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContentViewController.xib; sourceTree = "<group>"; };
+		8EF997211E65E00B00CB6DB3 /* FourPointEditableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourPointEditableView.h; sourceTree = "<group>"; };
+		8EF997221E65E00B00CB6DB3 /* FourPointEditableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourPointEditableView.m; sourceTree = "<group>"; };
+		8EF997241E66022800CB6DB3 /* CarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarView.h; sourceTree = "<group>"; };
+		8EF997251E66022800CB6DB3 /* CarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarView.m; sourceTree = "<group>"; };
+		8EF997271E66051100CB6DB3 /* Wheel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wheel.h; sourceTree = "<group>"; };
+		8EF997281E66051100CB6DB3 /* Wheel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wheel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +69,7 @@
 		8E4B05831E607F070046D1DB = {
 			isa = PBXGroup;
 			children = (
+				8E0FF8AD1E9A6114004FE5B3 /* GALearn-Prefix.pch */,
 				8E4B058E1E607F070046D1DB /* GALearn */,
 				8E4B058D1E607F070046D1DB /* Products */,
 			);
@@ -67,6 +95,23 @@
 				8E4B059D1E607F070046D1DB /* LaunchScreen.storyboard */,
 				8E4B05A01E607F070046D1DB /* Info.plist */,
 				8E4B058F1E607F070046D1DB /* Supporting Files */,
+				8E4B05A61E6080F20046D1DB /* CustomizableView.h */,
+				8E4B05A71E6080F20046D1DB /* CustomizableView.m */,
+				8EF997211E65E00B00CB6DB3 /* FourPointEditableView.h */,
+				8EF997221E65E00B00CB6DB3 /* FourPointEditableView.m */,
+				8EF997241E66022800CB6DB3 /* CarView.h */,
+				8EF997251E66022800CB6DB3 /* CarView.m */,
+				8EF997271E66051100CB6DB3 /* Wheel.h */,
+				8EF997281E66051100CB6DB3 /* Wheel.m */,
+				8EF580BD1E6F584D0003BF47 /* BinaryFormatter.h */,
+				8EF580BE1E6F584D0003BF47 /* BinaryFormatter.m */,
+				8EF565101E92BDB100311A02 /* CarCollectionViewCell.h */,
+				8EF565111E92BDB100311A02 /* CarCollectionViewCell.m */,
+				8EF565131E92C49200311A02 /* Alghoritm.h */,
+				8EF565141E92C49200311A02 /* Alghoritm.m */,
+				8EF931821E94324B00206AFB /* ContentViewController.h */,
+				8EF931831E94324B00206AFB /* ContentViewController.m */,
+				8EF931841E94324B00206AFB /* ContentViewController.xib */,
 			);
 			path = GALearn;
 			sourceTree = "<group>";
@@ -110,6 +155,7 @@
 				TargetAttributes = {
 					8E4B058B1E607F070046D1DB = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = EQ975ENJ75;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -137,6 +183,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EF931861E94324B00206AFB /* ContentViewController.xib in Resources */,
 				8E4B059F1E607F070046D1DB /* LaunchScreen.storyboard in Resources */,
 				8E4B059C1E607F070046D1DB /* Assets.xcassets in Resources */,
 				8E4B059A1E607F070046D1DB /* Main.storyboard in Resources */,
@@ -151,8 +198,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E4B05971E607F070046D1DB /* ViewController.m in Sources */,
+				8EF931851E94324B00206AFB /* ContentViewController.m in Sources */,
+				8EF565121E92BDB100311A02 /* CarCollectionViewCell.m in Sources */,
 				8E4B05941E607F070046D1DB /* AppDelegate.m in Sources */,
+				8E4B05A81E6080F20046D1DB /* CustomizableView.m in Sources */,
+				8EF997231E65E00B00CB6DB3 /* FourPointEditableView.m in Sources */,
+				8EF565151E92C49200311A02 /* Alghoritm.m in Sources */,
 				8E4B05911E607F070046D1DB /* main.m in Sources */,
+				8EF580BF1E6F584D0003BF47 /* BinaryFormatter.m in Sources */,
+				8EF997291E66051100CB6DB3 /* Wheel.m in Sources */,
+				8EF997261E66022800CB6DB3 /* CarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +327,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = EQ975ENJ75;
+				GCC_PREFIX_HEADER = "/Users/kamil/Desktop/GALearn/GALearn-Prefix.pch";
 				INFOPLIST_FILE = GALearn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Kamil-Poreba.GALearn";
@@ -283,6 +340,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = EQ975ENJ75;
+				GCC_PREFIX_HEADER = "/Users/kamil/Desktop/GALearn/GALearn-Prefix.pch";
 				INFOPLIST_FILE = GALearn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Kamil-Poreba.GALearn";
@@ -309,6 +368,7 @@
 				8E4B05A51E607F070046D1DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
