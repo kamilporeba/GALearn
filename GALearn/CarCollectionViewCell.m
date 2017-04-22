@@ -19,8 +19,12 @@
 
 -(void)setViewWithGenotype:(NSString *)genotype {
     for (UIView *subview in self.carView.subviews) {
-        [subview removeFromSuperview];
+        if (![subview isKindOfClass:[UILabel class]]) {
+            [subview removeFromSuperview];
+        }
+        
     }
     [self.carView buildCarFromGenotype:genotype];
 }
+
 @end

@@ -17,4 +17,5 @@ double angleBetweenThreePoints(CGPoint point1,CGPoint vertex, CGPoint point3);
 + (CGFloat)getSmiliarity:(CarView *)car withModel:(CarView *)model;
 + (CarView *)mateCar:(CarView *)car withOther:(CarView *)otherCar ;
 + (BOOL)isCar:(CarView *)car isFitterThen:(CarView *)secondCar toModel:(CarView *)modelCar;
++(NSArray<CarView *> *)generateNewPopulationWithOldPopulation:(NSArray<CarView *> *) oldPopulation andModel:(CarView *) model;
 @end

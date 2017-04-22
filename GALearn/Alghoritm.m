@@ -9,12 +9,17 @@
 #import "Alghoritm.h"
 #import "CarView.h"
 
+#define ARC4RANDOM_MAX     (0x100000000)
+#define MUTATION_RATE	    (0.20f)
+#define MUTATION_THRESHOLD (ARC4RANDOM_MAX * MUTATION_RATE)
+#define RANDOM()           (arc4random())
+
 @implementation Alghoritm
 
 + (NSString *)generateRandomeGenotypeWithMaxSize:(int) maxSize {
     NSMutableString *genotype = [[NSMutableString alloc] init];
     
-    while ([genotype length] <= GENE_LENGTH) {
+    while ([genotype length] < GENE_LENGTH) {
         int r = arc4random_uniform(maxSize);
         [genotype appendString:binaryStringFromInteger(r)];
         
@@ -27,33 +32,24 @@
     CGFloat similarityFirstCar = [Alghoritm getSmiliarity:car withModel:modelCar];
     CGFloat similaritySecondCar = [Alghoritm getSmiliarity:secondCar withModel:modelCar];
 
-    return similarityFirstCar > similaritySecondCar;
+    
+    return fabs(similarityFirstCar) < fabs(similaritySecondCar);
 }
 
 + (CGFloat)getSmiliarity:(CarView *)car withModel:(CarView *)model {
     
-    CGFloat sumModel = [self distanceBetween:model.carosery.firstPoint and:model.carosery.secondPoint] + [self distanceBetween:model.carosery.secondPoint and:model.carosery.thirdPoint] + [self distanceBetween:model.carosery.thirdPoint and:model.carosery.fourthPoint] + [self distanceBetween:model.carosery.fourthPoint and:model.carosery.firstPoint] + [self distanceBetween:model.carosery.firstPoint and:model.carosery.thirdPoint]+angleBetweenThreePoints(model.carosery.firstPoint, model.carosery.secondPoint, model.carosery.thirdPoint)+angleBetweenThreePoints(model.carosery.secondPoint, model.carosery.thirdPoint, model.carosery.fourthPoint)+angleBetweenThreePoints(model.carosery.thirdPoint, model.carosery.fourthPoint, model.carosery.firstPoint)+angleBetweenThreePoints(model.carosery.fourthPoint, model.carosery.firstPoint, model.carosery.secondPoint);
-    
-//
-//    + (model.carosery.pathBounds.size.width * model.carosery.pathBounds.size.height);
-    
-    CGFloat sumCar = [self distanceBetween:car.carosery.firstPoint and:car.carosery.secondPoint] + [self distanceBetween:car.carosery.secondPoint and:car.carosery.thirdPoint] + [self distanceBetween:car.carosery.thirdPoint and:car.carosery.fourthPoint] + [self distanceBetween:car.carosery.fourthPoint and:car.carosery.firstPoint] + [self distanceBetween:car.carosery.firstPoint and:car.carosery.thirdPoint];
-//    + (car.carosery.pathBounds.size.width * car.carosery.pathBounds.size.height);
-    
-    CGFloat sumDiff =  ( [self distanceBetween:car.carosery.firstPoint and:car.carosery.secondPoint]  - [self distanceBetween:model.carosery.firstPoint and:model.carosery.secondPoint] ) + ([self distanceBetween:model.carosery.secondPoint and:model.carosery.thirdPoint] - [self distanceBetween:car.carosery.secondPoint and:car.carosery.thirdPoint] ) + ( [self distanceBetween:car.carosery.thirdPoint and:car.carosery.fourthPoint]  - [self distanceBetween:model.carosery.thirdPoint and:model.carosery.fourthPoint]  ) + ([self distanceBetween:car.carosery.fourthPoint and:car.carosery.firstPoint] - [self distanceBetween:model.carosery.fourthPoint and:model.carosery.firstPoint]) + ([self distanceBetween:car.carosery.firstPoint and:car.carosery.thirdPoint] -  [self distanceBetween:model.carosery.firstPoint and:model.carosery.thirdPoint]) +(angleBetweenThreePoints(car.carosery.firstPoint, car.carosery.secondPoint, car.carosery.thirdPoint) - angleBetweenThreePoints(model.carosery.firstPoint, model.carosery.secondPoint, model.carosery.thirdPoint))+(angleBetweenThreePoints(car.carosery.secondPoint, car.carosery.thirdPoint, car.carosery.fourthPoint) - angleBetweenThreePoints(model.carosery.secondPoint, model.carosery.thirdPoint, model.carosery.fourthPoint)) + (angleBetweenThreePoints(car.carosery.thirdPoint, car.carosery.fourthPoint, car.carosery.firstPoint)-angleBetweenThreePoints(model.carosery.thirdPoint, model.carosery.fourthPoint, model.carosery.firstPoint))+(angleBetweenThreePoints(car.carosery.fourthPoint, car.carosery.firstPoint, car.carosery.secondPoint) - angleBetweenThreePoints(model.carosery.fourthPoint, model.carosery.firstPoint, model.carosery.secondPoint));
-    
-    if (sumDiff == 0) {
-        return  1;
-    }
-    if (sumDiff < 0) {
-        return 0;
-    } else {
-        return 1 - (sumDiff / sumModel);
-    }
+    CGFloat sumDiff =  ([self distanceBetween:model.carosery.firstPoint and:car.carosery.firstPoint])
+    + ([self distanceBetween:model.carosery.secondPoint and:car.carosery.secondPoint])
+    + ([self distanceBetween:model.carosery.thirdPoint and:car.carosery.thirdPoint])
+    + ([self distanceBetween:model.carosery.fourthPoint and:car.carosery.fourthPoint]);
+    return sumDiff;
 }
 
 + (float)distanceBetween:(CGPoint)p1 and:(CGPoint)p2 {
-    return sqrt(pow(p2.x-p1.x,2)+pow(p2.y-p1.y,2));
+    CGFloat xDist = (p2.x - p1.x);
+    CGFloat yDist = (p2.y - p1.y);
+   return sqrt((xDist * xDist) + (yDist * yDist));
+
 }
 //http://stackoverflow.com/questions/1211212/how-to-calculate-an-angle-from-three-points
 double angleBetweenThreePoints(CGPoint point1,CGPoint vertex, CGPoint point3) {
@@ -74,16 +70,57 @@ double angleBetweenThreePoints(CGPoint point1,CGPoint vertex, CGPoint point3) {
 +(CarView *)mateCar:(CarView *)car withOther:(CarView *)otherCar {
     CarView *childCar = [[CarView alloc] init];
     
-    NSString *firstParentGenotype = [car getGenotype];
-    NSString *secondParentGenotype = [otherCar getGenotype];
+    NSString *firstParentGenotype = car.genotype;
+    NSString *secondParentGenotype = otherCar.genotype;
     
     int firstPart = arc4random_uniform(GENE_LENGTH);
     
     NSString * childGenotype = [[firstParentGenotype substringWithRange:NSMakeRange(0, firstPart)] stringByAppendingString:[secondParentGenotype substringWithRange:NSMakeRange(firstPart, secondParentGenotype.length - firstPart)]];
     [childCar buildCarFromGenotype:childGenotype];
     
-    
+    if (RANDOM() < MUTATION_THRESHOLD) {
+        [Alghoritm mutate:childCar];
+    }
     return childCar;
+}
+
++(NSArray<CarView *> *)getBestCarFromPopulation:(NSArray<CarView *> *)population andModel:(CarView *)model  {
+    
+    NSArray *sortedPopulation = [population sortedArrayUsingComparator:^NSComparisonResult(CarView *  _Nonnull firstCar, CarView *  _Nonnull secondCar) {
+        
+        return [Alghoritm isCar:secondCar isFitterThen:firstCar toModel:model];
+    }];
+    NSArray *bestCars = @[sortedPopulation.firstObject, [sortedPopulation objectAtIndex:1]];
+    return bestCars;
+}
+
++(NSArray<CarView *> *)generateNewPopulationWithOldPopulation:(NSArray<CarView *> *) oldPopulation andModel:(CarView *) model {
+    NSArray *bestCars = [Alghoritm getBestCarFromPopulation:oldPopulation andModel:model];
+    NSMutableArray *newPopulation = [[NSMutableArray alloc] init];
+    for (CarView *car in oldPopulation) {
+        if (car != [bestCars objectAtIndex:0] && car != [bestCars objectAtIndex:1]) {
+            [newPopulation addObject:[Alghoritm mateCar:[bestCars objectAtIndex:0] withOther:[bestCars objectAtIndex:1]]];
+        } else {
+            [newPopulation addObject:car];
+        }
+    }
+    return newPopulation;
+}
+
++(void)mutate:(CarView *)childCar {
+    
+    NSString *genotype = childCar.genotype;
+    int r = arc4random_uniform(GENE_LENGTH);
+    
+    NSString *gene = [genotype substringWithRange:NSMakeRange(r, 1)];
+    
+    if ([gene isEqualToString:@"1"]) {
+       genotype = [genotype stringByReplacingCharactersInRange:NSMakeRange(r, 1) withString:@"0"];
+    }else {
+       genotype = [genotype stringByReplacingCharactersInRange:NSMakeRange(r, 1) withString:@"1"];
+    }
+    
+    childCar.genotype = genotype;
 }
 
 @end

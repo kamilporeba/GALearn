@@ -25,25 +25,30 @@
     [super viewDidLoad];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
-    [self.modelCarView buildCarFromGenotype:[Alghoritm generateRandomeGenotypeWithMaxSize:self.modelCarView.frame.size.width]];
-   
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Test String"];
-    [attributedString addAttribute:NSBackgroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(0, 11)];
-   
+    [self.modelCarView buildCarFromGenotype:@"0000000000000000000000000001101100000000000000000000000000011101000000000000000000000000100000000000000000000000000000000001010000000000000000000000000010000100000000000000000000000000011001000000000000000000000000000001111000000000000000000000000001100001"];
     
+//    CarView *car = [[CarView alloc]initWithFrame:CGRectMake(20, 20, 300, 300)];
+//    [car buildCarFromGenotype:@"0000000000000000000000000011111100000000000000000000000000011101000000000000000000000000100000000000000000000000000000000001010000000000000000000000000010000000000000000000000000000000011111000000000000000000000000000001111000000000000000000000000001100001"];
+//    [self.view addSubview: car];
+//    
+//    NSLog(@"%f",[Alghoritm getSmiliarity:car withModel:self.modelCarView]);
 }
+
 - (IBAction)refresh:(id)sender {
     
     [self refreshWithNewParameters];
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(doSomething) userInfo:nil repeats: YES];
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:.2 target:self selector:@selector(doSomething) userInfo:nil repeats: YES];
     [timer fire];
+}
+- (IBAction)nextStep:(id)sender {
+    [self doSomething];
 }
 
 -(void)initRandomGeneration {
     self.populationArray = [[NSMutableArray alloc] init];
     for (int i=0; i<= (int) self.populationCount.value; i++) {
         CarView *car = [[CarView alloc] init];
-        [car buildCarFromGenotype:[Alghoritm generateRandomeGenotypeWithMaxSize:100]];
+        [car buildCarFromGenotype:[Alghoritm generateRandomeGenotypeWithMaxSize:self.modelCarView.frame.size.width]];
         [self.populationArray addObject:car];
     }
 }
@@ -60,7 +65,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CarCollectionViewCell *carCell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CarCollectionViewCell class]) forIndexPath:indexPath];
-    [carCell setViewWithGenotype:[[self.populationArray objectAtIndex:indexPath.row] getGenotype]];
+    [carCell setViewWithGenotype:[self.populationArray objectAtIndex:indexPath.row].genotype];
     [carCell.similarity setText:[NSString stringWithFormat:@"%f",[Alghoritm getSmiliarity:carCell.carView withModel:self.modelCarView]]];
     return carCell;
 }
@@ -80,15 +85,16 @@
 #pragma mark -Alghoritm 
 
 -(void)doSomething {
-    CarView *childCar;
-    for (int i=0; i< self.populationArray.count - 1; i++ ) {
-        CarView *firstCar = [self.populationArray objectAtIndex:i];
-        CarView *secondCar = [self.populationArray objectAtIndex:i+1];
-        childCar = [Alghoritm mateCar:firstCar withOther:secondCar];
-        NSInteger indexToDeath = [Alghoritm isCar:firstCar isFitterThen:secondCar toModel:self.modelCarView] ? i+1 : i;
-        [self.populationArray replaceObjectAtIndex:indexToDeath withObject:childCar];
-    }
-    [self refreshWithNewParameters];
+    self.populationArray = [Alghoritm generateNewPopulationWithOldPopulation:self.populationArray andModel:self.modelCarView];
+//    CarView *childCar;
+//    for (int i=0; i< self.populationArray.count - 1; i++ ) {
+//        CarView *firstCar = [self.populationArray objectAtIndex:i];
+//        CarView *secondCar = [self.populationArray objectAtIndex:i+1];
+//        childCar = [Alghoritm mateCar:firstCar withOther:secondCar];
+//        NSInteger indexToDeath = [Alghoritm isCar:firstCar isFitterThen:secondCar toModel:self.modelCarView] ? i+1 : i;
+//        [self.populationArray replaceObjectAtIndex:indexToDeath withObject:childCar];
+//    }
+    [self.collectionView reloadData];
 }
 
 -(void)refreshWithNewParameters {

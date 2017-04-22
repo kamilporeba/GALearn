@@ -13,14 +13,9 @@
 NSString * binaryStringFromInteger( int number );
 
 @interface CarView : UIView
-
-@property(nonatomic) Wheel *firstWheel;
-@property(nonatomic) Wheel *secondWheel;
 @property(nonatomic) FourPointEditableView *carosery;
+@property (nonatomic)NSString *genotype;
 
-- (void)addCarroseryWithPoint:(CGPoint)firstPoint andSecond:(CGPoint)secondPoint andThird:(CGPoint)thirdPoint andFourth:(CGPoint)fourthPoint isEditableView:(BOOL)isEditable;
-- (void)addWheelAtPoint:(CGPoint)firstPoint andSecond:(CGPoint)secondPoint ;
 - (NSString *)getGenotype;
 - (void)buildCarFromGenotype:(NSString *)genotype;
-- (CGFloat)getSmiliarityNumberWithModel:(CarView *)car;
 @end
