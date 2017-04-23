@@ -8,8 +8,6 @@
 
 #import "CustomizableView.h"
 
-
-
 @interface CustomizableView()
 
 @end

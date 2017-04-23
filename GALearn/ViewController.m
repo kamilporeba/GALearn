@@ -26,12 +26,6 @@
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     [self.modelCarView buildCarFromGenotype:@"0000000000000000000000000001101100000000000000000000000000011101000000000000000000000000100000000000000000000000000000000001010000000000000000000000000010000100000000000000000000000000011001000000000000000000000000000001111000000000000000000000000001100001"];
-    
-//    CarView *car = [[CarView alloc]initWithFrame:CGRectMake(20, 20, 300, 300)];
-//    [car buildCarFromGenotype:@"0000000000000000000000000011111100000000000000000000000000011101000000000000000000000000100000000000000000000000000000000001010000000000000000000000000010000000000000000000000000000000011111000000000000000000000000000001111000000000000000000000000001100001"];
-//    [self.view addSubview: car];
-//    
-//    NSLog(@"%f",[Alghoritm getSmiliarity:car withModel:self.modelCarView]);
 }
 
 - (IBAction)refresh:(id)sender {
@@ -85,15 +79,21 @@
 #pragma mark -Alghoritm 
 
 -(void)doSomething {
-    self.populationArray = [Alghoritm generateNewPopulationWithOldPopulation:self.populationArray andModel:self.modelCarView];
-//    CarView *childCar;
-//    for (int i=0; i< self.populationArray.count - 1; i++ ) {
-//        CarView *firstCar = [self.populationArray objectAtIndex:i];
-//        CarView *secondCar = [self.populationArray objectAtIndex:i+1];
-//        childCar = [Alghoritm mateCar:firstCar withOther:secondCar];
-//        NSInteger indexToDeath = [Alghoritm isCar:firstCar isFitterThen:secondCar toModel:self.modelCarView] ? i+1 : i;
-//        [self.populationArray replaceObjectAtIndex:indexToDeath withObject:childCar];
-//    }
+//    self.populationArray = [Alghoritm generateNewPopulationWithOldPopulation:self.populationArray andModel:self.modelCarView];
+    CarView *childCar;
+    for (int i=0; i< self.populationArray.count - 1; i++ ) {
+        CarView *firstCar = [self.populationArray objectAtIndex:i];
+        CarView *secondCar = [self.populationArray objectAtIndex:i+1];
+        childCar = [Alghoritm mateCar:firstCar withOther:secondCar];
+        NSInteger indexToDeath = [Alghoritm isCar:firstCar isFitterThen:secondCar toModel:self.modelCarView] ? i+1 : i;
+        [self.populationArray replaceObjectAtIndex:indexToDeath withObject:childCar];
+    }
+    CarView *lastObj = self.populationArray.lastObject;
+    CarView *firstObject = self.populationArray.firstObject;
+    [self.populationArray removeObjectAtIndex:0];
+    [self.populationArray insertObject:lastObj atIndex:0];
+    [self.populationArray removeLastObject];
+    [self.populationArray insertObject:firstObject atIndex:self.populationArray.count -1];
     [self.collectionView reloadData];
 }
 
