@@ -15,7 +15,9 @@ NSString * binaryStringFromInteger( int number );
 @interface CarView : UIView
 @property(nonatomic) FourPointEditableView *carosery;
 @property (nonatomic)NSString *genotype;
+@property (nonatomic) BOOL isSelected;
 
 - (NSString *)getGenotype;
 - (void)buildCarFromGenotype:(NSString *)genotype;
+- (void)buildCarFromGenotype:(NSString *)genotype andEditable:(BOOL)isEditable;
 @end

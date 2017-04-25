@@ -14,6 +14,7 @@
 		8E4B059C1E607F070046D1DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E4B059B1E607F070046D1DB /* Assets.xcassets */; };
 		8E4B059F1E607F070046D1DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4B059D1E607F070046D1DB /* LaunchScreen.storyboard */; };
 		8E4B05A81E6080F20046D1DB /* CustomizableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4B05A71E6080F20046D1DB /* CustomizableView.m */; };
+		8E6405B61EAFA75400CCB8A6 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6405B51EAFA75400CCB8A6 /* NSMutableArray+Shuffle.m */; };
 		8EF565121E92BDB100311A02 /* CarCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF565111E92BDB100311A02 /* CarCollectionViewCell.m */; };
 		8EF565151E92C49200311A02 /* Alghoritm.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF565141E92C49200311A02 /* Alghoritm.m */; };
 		8EF580BF1E6F584D0003BF47 /* BinaryFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF580BE1E6F584D0003BF47 /* BinaryFormatter.m */; };
@@ -38,6 +39,8 @@
 		8E4B05A01E607F070046D1DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E4B05A61E6080F20046D1DB /* CustomizableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomizableView.h; sourceTree = "<group>"; };
 		8E4B05A71E6080F20046D1DB /* CustomizableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomizableView.m; sourceTree = "<group>"; };
+		8E6405B41EAFA75400CCB8A6 /* NSMutableArray+Shuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffle.h"; sourceTree = "<group>"; };
+		8E6405B51EAFA75400CCB8A6 /* NSMutableArray+Shuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffle.m"; sourceTree = "<group>"; };
 		8EF565101E92BDB100311A02 /* CarCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarCollectionViewCell.h; sourceTree = "<group>"; };
 		8EF565111E92BDB100311A02 /* CarCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarCollectionViewCell.m; sourceTree = "<group>"; };
 		8EF565131E92C49200311A02 /* Alghoritm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alghoritm.h; sourceTree = "<group>"; };
@@ -112,6 +115,8 @@
 				8EF931821E94324B00206AFB /* ContentViewController.h */,
 				8EF931831E94324B00206AFB /* ContentViewController.m */,
 				8EF931841E94324B00206AFB /* ContentViewController.xib */,
+				8E6405B41EAFA75400CCB8A6 /* NSMutableArray+Shuffle.h */,
+				8E6405B51EAFA75400CCB8A6 /* NSMutableArray+Shuffle.m */,
 			);
 			path = GALearn;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 				8EF997231E65E00B00CB6DB3 /* FourPointEditableView.m in Sources */,
 				8EF565151E92C49200311A02 /* Alghoritm.m in Sources */,
 				8E4B05911E607F070046D1DB /* main.m in Sources */,
+				8E6405B61EAFA75400CCB8A6 /* NSMutableArray+Shuffle.m in Sources */,
 				8EF580BF1E6F584D0003BF47 /* BinaryFormatter.m in Sources */,
 				8EF997291E66051100CB6DB3 /* Wheel.m in Sources */,
 				8EF997261E66022800CB6DB3 /* CarView.m in Sources */,

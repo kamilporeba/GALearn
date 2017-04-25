@@ -8,6 +8,8 @@
 
 #import "Alghoritm.h"
 #import "CarView.h"
+#import "NSMutableArray+Shuffle.h"
+
 
 @implementation Alghoritm
 
@@ -17,7 +19,6 @@
     while ([genotype length] < GENE_LENGTH) {
         int r = arc4random_uniform(maxSize);
         [genotype appendString:binaryStringFromInteger(r)];
-        
     }
   
     return genotype;
@@ -28,7 +29,7 @@
     CGFloat similaritySecondCar = [Alghoritm getSmiliarity:secondCar withModel:modelCar];
 
     
-    return fabs(similarityFirstCar) < fabs(similaritySecondCar);
+    return similarityFirstCar <= similaritySecondCar;
 }
 
 + (CGFloat)getSmiliarity:(CarView *)car withModel:(CarView *)model {
@@ -90,89 +91,61 @@ double angleBetweenThreePoints(CGPoint point1,CGPoint vertex, CGPoint point3) {
     return bestCars;
 }
 
-//for all members of population
-//sum += fitness of this individual
-//end for
-//
-//for all members of population
-//probability = sum of probabilities + (fitness / sum)
-//sum of probabilities += probability
-//end for
-//
-//loop until new population is full
-//do this twice
-//number = Random between 0 and 1
-//for all members of population
-//if number > probability but less than next probability
-//then you have been selected
-//end for
-//end
-//create offspring
-//end loop
-
 +(NSArray<CarView *> *)generateNewPopulationWithOldPopulation:(NSArray<CarView *> *) oldPopulation andModel:(CarView *) model {
 
     NSMutableArray *newPopulation = [[NSMutableArray alloc] init];
     
+    
+    NSArray *sortedPopulation = [oldPopulation sortedArrayUsingComparator:^NSComparisonResult(CarView *  _Nonnull firstCar, CarView *  _Nonnull secondCar) {
+        return [Alghoritm isCar:secondCar isFitterThen:firstCar toModel:model];
+    }];
+    
+ 
     CGFloat sumOfFitness;
     CGFloat sumOfPropability = 0;
     for (CarView *car in oldPopulation) {
-        sumOfFitness += [Alghoritm getSmiliarity:car withModel:model];
+        if (car == sortedPopulation.firstObject) {
+            sumOfFitness += [Alghoritm getSmiliarity:car withModel:model] * 2;
+        } else {
+            sumOfFitness += [Alghoritm getSmiliarity:car withModel:model];
+        }
+        
+    }
+    CGFloat numberToRand;
+    for (CarView *car in oldPopulation) {
+        if (car == sortedPopulation.firstObject) {
+            numberToRand += (1/ (([Alghoritm getSmiliarity:car withModel:model] *2)/sumOfFitness));
+        } else {
+            numberToRand += (1/ ([Alghoritm getSmiliarity:car withModel:model]/sumOfFitness));
+        }
+        
     }
     
-    while (newPopulation.count < oldPopulation.count) {
-        
+    for (int i =0; i<sortedPopulation.count - 8; i++) {
+        [newPopulation addObject:[sortedPopulation objectAtIndex:i]];
+    }
+    
+    for (int i=0; i<=7; i++) {
         NSMutableArray *selectedParent = [[NSMutableArray alloc]init];
         
         for (int i = 0 ; i<2; i++) {
             sumOfPropability = 0;
-            double rand = arc4random_uniform(sumOfFitness);
+            double rand = arc4random_uniform(numberToRand);
             for (CarView *car in oldPopulation) {
-              sumOfPropability += [Alghoritm getSmiliarity:car withModel:model];
-                if (rand < sumOfPropability) {
+                CGFloat numberToADD = (1/ ([Alghoritm getSmiliarity:car withModel:model]/sumOfFitness));
+                sumOfPropability += numberToADD;
+                if (rand <= sumOfPropability) {
                     [selectedParent addObject:car];
                     break;
                 }
             }
         }
-
+        
+        NSAssert(selectedParent.count == 2, @"");
+        
         [newPopulation addObject:[Alghoritm mateCar:selectedParent.firstObject withOther:selectedParent.lastObject]];
     }
-//    for (CarView *car in oldPopulation) {
-//        CGFloat probability = sumOfPropability + ([Alghoritm getSmiliarity:car withModel:model]/sumOfFitness);
-//        sumOfFitness += probability;
-//    }
-    
-//    while (newPopulation.count < oldPopulation.count) {
-//        NSMutableArray *selectedParent = [[NSMutableArray alloc]init];
-//        for (int i = 0 ; i<2; i++) {
-//            double rand = ((double)arc4random() / ARC4RANDOM_MAX);
-//            
-//            for (int i =0; i<oldPopulation.count; i++) {
-//                int nextIndex =0;
-//                if (i+1 >= oldPopulation.count) {
-//                    nextIndex = 0;
-//                } else {
-//                    nextIndex = i+1;
-//                }
-//                CGFloat probability = sumOfPropability + ([Alghoritm getSmiliarity:[oldPopulation objectAtIndex:i] withModel:model]/sumOfFitness);
-//                 CGFloat nextProbability = sumOfPropability + ([Alghoritm getSmiliarity:[oldPopulation objectAtIndex:nextIndex] withModel:model]/sumOfFitness);
-//                NSLog(@"rand : %f, prob: %f, nextProb: %f",rand, probability, nextProbability);
-//                if (rand > probability && rand < nextProbability) {
-//                    [selectedParent addObject:[oldPopulation objectAtIndex:i]];
-//                }
-//            }
-//        }
-//        [newPopulation addObject:[Alghoritm mateCar:selectedParent.firstObject withOther:selectedParent.lastObject]];
-//    }
-//    for (CarView *car in oldPopulation) {
-//        
-//        if (car != sortedPopulation.firstObject || car != [sortedPopulation objectAtIndex:1]) {
-//            [newPopulation addObject:[Alghoritm mateCar:[sortedPopulation objectAtIndex:0] withOther:[sortedPopulation objectAtIndex:1]]];
-//        } else {
-//            [newPopulation addObject:car];
-//        }
-//    }
+    [newPopulation shuffle];
     return newPopulation;
 }
 

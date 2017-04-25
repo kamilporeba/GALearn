@@ -12,11 +12,12 @@
 #import "Alghoritm.h"
 #import "ContentViewController.h"
 
-@interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIPopoverPresentationControllerDelegate>
 @property (weak, nonatomic) IBOutlet CarView *modelCarView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UISlider *populationCount;
 @property (nonatomic,strong) NSMutableArray<CarView *> *populationArray;
+@property (nonatomic, strong) NSTimer *timer;
 @end
 
 @implementation ViewController
@@ -25,17 +26,21 @@
     [super viewDidLoad];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
-    [self.modelCarView buildCarFromGenotype:@"0000000000000000000000000001101100000000000000000000000000011101000000000000000000000000100000000000000000000000000000000001010000000000000000000000000010000100000000000000000000000000011001000000000000000000000000000001111000000000000000000000000001100001"];
+    [self.modelCarView buildCarFromGenotype:@"0000000000000000000000000001101100000000000000000000000000011101000000000000000000000000100000000000000000000000000000000001010000000000000000000000000010000100000000000000000000000000011001000000000000000000000000000001111000000000000000000000000001100001" andEditable:YES];
+    
 }
 
-- (IBAction)refresh:(id)sender {
-    
-    [self refreshWithNewParameters];
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:.2 target:self selector:@selector(doSomething) userInfo:nil repeats: YES];
-    [timer fire];
-}
 - (IBAction)nextStep:(id)sender {
     [self doSomething];
+}
+
+- (IBAction)start:(id)sender {
+     [self refreshWithNewParameters];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:.000002 target:self selector:@selector(doSomething) userInfo:nil repeats: YES];
+    [self.timer fire];
+}
+- (IBAction)IterationInfo:(id)sender {
+    [self showAlertWithInfo:@"Lorem ipsum" withButton:(UIButton *)sender];
 }
 
 -(void)initRandomGeneration {
@@ -46,6 +51,24 @@
         [self.populationArray addObject:car];
     }
 }
+
+-(void)showAlertWithInfo:(NSString *)infoText withButton:(UIButton *)button {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Directions"
+                                                                   message:@"Select mode of transportation:"
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    alert.popoverPresentationController.sourceView = button;
+    alert.popoverPresentationController.sourceRect = button.bounds;
+    alert.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionRight;
+
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [alert dismissViewControllerAnimated:NO completion:nil];
+    }]];
+    alert.popoverPresentationController.delegate = self;
+
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+
 
 #pragma mark -CollectionView methods
 
@@ -79,22 +102,20 @@
 #pragma mark -Alghoritm 
 
 -(void)doSomething {
-//    self.populationArray = [Alghoritm generateNewPopulationWithOldPopulation:self.populationArray andModel:self.modelCarView];
-    CarView *childCar;
-    for (int i=0; i< self.populationArray.count - 1; i++ ) {
-        CarView *firstCar = [self.populationArray objectAtIndex:i];
-        CarView *secondCar = [self.populationArray objectAtIndex:i+1];
-        childCar = [Alghoritm mateCar:firstCar withOther:secondCar];
-        NSInteger indexToDeath = [Alghoritm isCar:firstCar isFitterThen:secondCar toModel:self.modelCarView] ? i+1 : i;
-        [self.populationArray replaceObjectAtIndex:indexToDeath withObject:childCar];
-    }
-    CarView *lastObj = self.populationArray.lastObject;
-    CarView *firstObject = self.populationArray.firstObject;
-    [self.populationArray removeObjectAtIndex:0];
-    [self.populationArray insertObject:lastObj atIndex:0];
-    [self.populationArray removeLastObject];
-    [self.populationArray insertObject:firstObject atIndex:self.populationArray.count -1];
+self.populationArray = [Alghoritm generateNewPopulationWithOldPopulation:self.populationArray andModel:self.modelCarView];
     [self.collectionView reloadData];
+    [self checkPopulation];
+}
+
+-(void)checkPopulation {
+    for (CarView *car  in self.populationArray) {
+        if ([Alghoritm getSmiliarity:car withModel:self.modelCarView] <= 10) {
+            [self.timer invalidate];
+            [car setIsSelected:YES];
+            [self.collectionView reloadData];
+            break;
+        }
+    }
 }
 
 -(void)refreshWithNewParameters {
@@ -102,6 +123,11 @@
     [self.collectionView reloadData];
 }
 
+-(UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
+    return UIModalPresentationNone;
+}
 
-
+-(BOOL)popoverPresentationControllerShouldDismissPopover:(UIPopoverPresentationController *)popoverPresentationController {
+    return YES;
+}
 @end

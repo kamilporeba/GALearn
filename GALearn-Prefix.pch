@@ -11,7 +11,7 @@
 #define GENE_LENGTH 8*32
 
 #define ARC4RANDOM_MAX     (0x100000000)
-#define MUTATION_RATE	    (0.20f)
+#define MUTATION_RATE	    (0.25f)
 #define MUTATION_THRESHOLD (ARC4RANDOM_MAX * MUTATION_RATE)
 #define RANDOM()           (arc4random())
 

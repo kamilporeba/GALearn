@@ -34,6 +34,10 @@
 }
 
 - (void)buildCarFromGenotype:(NSString *)genotype {
+    [self buildCarFromGenotype:genotype andEditable:NO];
+}
+
+- (void)buildCarFromGenotype:(NSString *)genotype andEditable:(BOOL)isEditable {
     self.genotype = genotype;
     NSAssert([genotype length] == GENE_LENGTH, @"Wrong genotype");
     long firstPointX = strtol([[genotype substringWithRange:NSMakeRange(0,32)]UTF8String], NULL, 2);
@@ -45,7 +49,7 @@
     long fourthPointX = strtol([[genotype substringWithRange:NSMakeRange(192,32)]UTF8String], NULL, 2);
     long fourthPointY = strtol([[genotype substringWithRange:NSMakeRange(224,32)]UTF8String], NULL, 2);
     
-    [self addCarroseryWithPoint:CGPointMake(firstPointX, firstPointY) andSecond:CGPointMake(secondPointX, secondPointY) andThird:CGPointMake(thirdPointX, thirdPointY) andFourth:CGPointMake(fourthPointX, fourthPointY) isEditableView:YES];
+    [self addCarroseryWithPoint:CGPointMake(firstPointX, firstPointY) andSecond:CGPointMake(secondPointX, secondPointY) andThird:CGPointMake(thirdPointX, thirdPointY) andFourth:CGPointMake(fourthPointX, fourthPointY) isEditableView:isEditable];
 }
 
 NSString * binaryStringFromInteger( int number )
