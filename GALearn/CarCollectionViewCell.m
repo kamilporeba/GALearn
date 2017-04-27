@@ -18,11 +18,6 @@
 }
 
 -(void)setViewWithGenotype:(NSString *)genotype {
-    if (self.carView.isSelected) {
-        [self.carView setBackgroundColor:[UIColor greenColor]];
-    }else {
-       [self.carView setBackgroundColor:[UIColor whiteColor]];
-    }
     for (UIView *subview in self.carView.subviews) {
         if (![subview isKindOfClass:[UILabel class]]) {
             [subview removeFromSuperview];

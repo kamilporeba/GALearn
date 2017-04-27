@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E1277871EB0AA090025182F /* InfoToolTipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1277851EB0AA090025182F /* InfoToolTipViewController.m */; };
+		8E1277881EB0AA090025182F /* InfoToolTipViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E1277861EB0AA090025182F /* InfoToolTipViewController.xib */; };
 		8E4B05911E607F070046D1DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4B05901E607F070046D1DB /* main.m */; };
 		8E4B05941E607F070046D1DB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4B05931E607F070046D1DB /* AppDelegate.m */; };
 		8E4B05971E607F070046D1DB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4B05961E607F070046D1DB /* ViewController.m */; };
@@ -27,6 +29,9 @@
 
 /* Begin PBXFileReference section */
 		8E0FF8AD1E9A6114004FE5B3 /* GALearn-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GALearn-Prefix.pch"; sourceTree = "<group>"; };
+		8E1277841EB0AA090025182F /* InfoToolTipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoToolTipViewController.h; sourceTree = "<group>"; };
+		8E1277851EB0AA090025182F /* InfoToolTipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoToolTipViewController.m; sourceTree = "<group>"; };
+		8E1277861EB0AA090025182F /* InfoToolTipViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoToolTipViewController.xib; sourceTree = "<group>"; };
 		8E4B058C1E607F070046D1DB /* GALearn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GALearn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4B05901E607F070046D1DB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8E4B05921E607F070046D1DB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -117,6 +122,9 @@
 				8EF931841E94324B00206AFB /* ContentViewController.xib */,
 				8E6405B41EAFA75400CCB8A6 /* NSMutableArray+Shuffle.h */,
 				8E6405B51EAFA75400CCB8A6 /* NSMutableArray+Shuffle.m */,
+				8E1277841EB0AA090025182F /* InfoToolTipViewController.h */,
+				8E1277851EB0AA090025182F /* InfoToolTipViewController.m */,
+				8E1277861EB0AA090025182F /* InfoToolTipViewController.xib */,
 			);
 			path = GALearn;
 			sourceTree = "<group>";
@@ -191,6 +199,7 @@
 				8EF931861E94324B00206AFB /* ContentViewController.xib in Resources */,
 				8E4B059F1E607F070046D1DB /* LaunchScreen.storyboard in Resources */,
 				8E4B059C1E607F070046D1DB /* Assets.xcassets in Resources */,
+				8E1277881EB0AA090025182F /* InfoToolTipViewController.xib in Resources */,
 				8E4B059A1E607F070046D1DB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -206,6 +215,7 @@
 				8EF931851E94324B00206AFB /* ContentViewController.m in Sources */,
 				8EF565121E92BDB100311A02 /* CarCollectionViewCell.m in Sources */,
 				8E4B05941E607F070046D1DB /* AppDelegate.m in Sources */,
+				8E1277871EB0AA090025182F /* InfoToolTipViewController.m in Sources */,
 				8E4B05A81E6080F20046D1DB /* CustomizableView.m in Sources */,
 				8EF997231E65E00B00CB6DB3 /* FourPointEditableView.m in Sources */,
 				8EF565151E92C49200311A02 /* Alghoritm.m in Sources */,

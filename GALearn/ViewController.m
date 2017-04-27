@@ -11,11 +11,29 @@
 #import "CarCollectionViewCell.h"
 #import "Alghoritm.h"
 #import "ContentViewController.h"
+#import "InfoToolTipViewController.h"
+
+typedef enum : NSUInteger {
+    Iteration,
+    PopulationSize,
+    Mutation,
+    Selection,
+    ChildAmount,
+    StopTrigger
+} InfoButtonParameter;
 
 @interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIPopoverPresentationControllerDelegate>
 @property (weak, nonatomic) IBOutlet CarView *modelCarView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UISlider *populationCount;
+@property (weak, nonatomic) IBOutlet UISlider *iterationCount;
+@property (weak, nonatomic) IBOutlet UISlider *mutation;
+@property (weak, nonatomic) IBOutlet UISlider *selectionProbability;
+@property (weak, nonatomic) IBOutlet UISlider *childCount;
+@property (weak, nonatomic) IBOutlet UISlider *stopTrigger;
+
+@property (nonatomic, strong) IBOutletCollection(UILabel) NSArray *countLabels;
+
 @property (nonatomic,strong) NSMutableArray<CarView *> *populationArray;
 @property (nonatomic, strong) NSTimer *timer;
 @end
@@ -30,16 +48,52 @@
     
 }
 
-- (IBAction)nextStep:(id)sender {
-    [self doSomething];
-}
-
 - (IBAction)start:(id)sender {
      [self refreshWithNewParameters];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:.000002 target:self selector:@selector(doSomething) userInfo:nil repeats: YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:.000002 target:self selector:@selector(evolutionOfOneGeneration) userInfo:nil repeats: YES];
     [self.timer fire];
 }
+
+- (IBAction)evolution:(id)sender {
+    if (self.populationArray.count <= 0) {
+        [self initRandomGeneration];
+    }
+    for (int i=0; i<=(int)self.iterationCount.value; i++) {
+        [self evolutionOfOneGeneration];
+    }
+}
+
+- (IBAction)reset:(id)sender {
+    [self.populationArray removeAllObjects];
+    [self.collectionView reloadData];
+}
+
+- (IBAction)didSlide:(id)sender {
+    UISlider *slider = (UISlider *) sender;
+    UILabel *label =  (UILabel *)[self.countLabels objectAtIndex:slider.tag];
+    if (slider.tag == Mutation) {
+        [label setText: [NSString stringWithFormat:@"%.2f", slider.value]];
+        
+    } else {
+        [label setText: [NSString stringWithFormat:@"%d",(int) slider.value]];
+    }
+    switch (slider.tag) {
+        case ChildAmount:
+            numberOfChild =(int) self.childCount.value;
+            break;
+        case Mutation:
+            break;
+        case Selection:
+            selectionPression = (int) self.selectionProbability.value;
+            break;
+        default:
+            break;
+    }
+}
+
 - (IBAction)IterationInfo:(id)sender {
+    UIButton *b = (UIButton *)sender;
+    
     [self showAlertWithInfo:@"Lorem ipsum" withButton:(UIButton *)sender];
 }
 
@@ -53,22 +107,17 @@
 }
 
 -(void)showAlertWithInfo:(NSString *)infoText withButton:(UIButton *)button {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Directions"
-                                                                   message:@"Select mode of transportation:"
-                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    InfoToolTipViewController *alert = [[InfoToolTipViewController alloc]init];
+    [alert setModalPresentationStyle:UIModalPresentationPopover];
     alert.popoverPresentationController.sourceView = button;
     alert.popoverPresentationController.sourceRect = button.bounds;
     alert.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionRight;
-
-    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [alert dismissViewControllerAnimated:NO completion:nil];
-    }]];
+    [alert setPreferredContentSize:CGSizeMake(250, 200)];
+    
     alert.popoverPresentationController.delegate = self;
 
     [self presentViewController:alert animated:YES completion:nil];
 }
-
-
 
 #pragma mark -CollectionView methods
 
@@ -84,6 +133,11 @@
     CarCollectionViewCell *carCell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CarCollectionViewCell class]) forIndexPath:indexPath];
     [carCell setViewWithGenotype:[self.populationArray objectAtIndex:indexPath.row].genotype];
     [carCell.similarity setText:[NSString stringWithFormat:@"%f",[Alghoritm getSmiliarity:carCell.carView withModel:self.modelCarView]]];
+    if (carCell.carView.isWinner) {
+        [carCell.carView setBackgroundColor:[UIColor greenColor]];
+    } else {
+         [carCell.carView setBackgroundColor:[UIColor whiteColor]];
+    }
     return carCell;
 }
 
@@ -101,18 +155,21 @@
 
 #pragma mark -Alghoritm 
 
--(void)doSomething {
-self.populationArray = [Alghoritm generateNewPopulationWithOldPopulation:self.populationArray andModel:self.modelCarView];
+-(void)evolutionOfOneGeneration {
+    self.populationArray = [Alghoritm generateNewPopulationWithOldPopulation:self.populationArray andModel:self.modelCarView];
     [self.collectionView reloadData];
     [self checkPopulation];
 }
 
 -(void)checkPopulation {
     for (CarView *car  in self.populationArray) {
-        if ([Alghoritm getSmiliarity:car withModel:self.modelCarView] <= 10) {
+        if ([Alghoritm getSmiliarity:car withModel:self.modelCarView] <= 14){//(int)self.stopTrigger.value) {
             [self.timer invalidate];
-            [car setIsSelected:YES];
-            [self.collectionView reloadData];
+            [car setIsWinner:YES];
+            NSLog(@"Sukcess");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.collectionView reloadData];
+            });
             break;
         }
     }
@@ -127,7 +184,7 @@ self.populationArray = [Alghoritm generateNewPopulationWithOldPopulation:self.po
     return UIModalPresentationNone;
 }
 
--(BOOL)popoverPresentationControllerShouldDismissPopover:(UIPopoverPresentationController *)popoverPresentationController {
-    return YES;
+-(UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller traitCollection:(UITraitCollection *)traitCollection {
+    return UIModalPresentationNone;
 }
 @end

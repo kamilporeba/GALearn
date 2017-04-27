@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "CarView.h"
 
-double angleBetweenThreePoints(CGPoint point1,CGPoint vertex, CGPoint point3);
+static int numberOfChild = 7;
+static int selectionPression = 2;
 
 @interface Alghoritm : NSObject
-
 + (NSString *)generateRandomeGenotypeWithMaxSize:(int) maxSize;
 + (CGFloat)getSmiliarity:(CarView *)car withModel:(CarView *)model;
 + (CarView *)mateCar:(CarView *)car withOther:(CarView *)otherCar ;

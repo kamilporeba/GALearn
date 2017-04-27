@@ -13,6 +13,8 @@
 
 @implementation Alghoritm
 
+
+
 + (NSString *)generateRandomeGenotypeWithMaxSize:(int) maxSize {
     NSMutableString *genotype = [[NSMutableString alloc] init];
     
@@ -46,21 +48,6 @@
     CGFloat yDist = (p2.y - p1.y);
    return sqrt((xDist * xDist) + (yDist * yDist));
 
-}
-//http://stackoverflow.com/questions/1211212/how-to-calculate-an-angle-from-three-points
-double angleBetweenThreePoints(CGPoint point1,CGPoint vertex, CGPoint point3) {
-    CGPoint point_a = vertex;
-    CGPoint point_b = point1;
-    CGPoint point_c = point3;
-    CGFloat a, b, c;
-    
-    a = [Alghoritm distanceBetween:point_a and:point_b];
-    b = [Alghoritm distanceBetween:point_a and:point_c];
-    c = [Alghoritm distanceBetween:point_b and:point_c];
-    double result = acos((a*a+b*b-c*c)/(2*a*b));
-    
-    return result/M_PI * 180.0;
-    
 }
 
 +(CarView *)mateCar:(CarView *)car withOther:(CarView *)otherCar {
@@ -105,7 +92,7 @@ double angleBetweenThreePoints(CGPoint point1,CGPoint vertex, CGPoint point3) {
     CGFloat sumOfPropability = 0;
     for (CarView *car in oldPopulation) {
         if (car == sortedPopulation.firstObject) {
-            sumOfFitness += [Alghoritm getSmiliarity:car withModel:model] * 2;
+            sumOfFitness += [Alghoritm getSmiliarity:car withModel:model] * selectionPression;
         } else {
             sumOfFitness += [Alghoritm getSmiliarity:car withModel:model];
         }
@@ -114,21 +101,34 @@ double angleBetweenThreePoints(CGPoint point1,CGPoint vertex, CGPoint point3) {
     CGFloat numberToRand;
     for (CarView *car in oldPopulation) {
         if (car == sortedPopulation.firstObject) {
-            numberToRand += (1/ (([Alghoritm getSmiliarity:car withModel:model] *2)/sumOfFitness));
+            numberToRand += (1/ (([Alghoritm getSmiliarity:car withModel:model] *selectionPression)/sumOfFitness));
         } else {
             numberToRand += (1/ ([Alghoritm getSmiliarity:car withModel:model]/sumOfFitness));
         }
         
     }
     
-    for (int i =0; i<sortedPopulation.count - 8; i++) {
+    for (int i =0; i<sortedPopulation.count - (numberOfChild+1); i++) {
         [newPopulation addObject:[sortedPopulation objectAtIndex:i]];
     }
     
-    for (int i=0; i<=7; i++) {
+    for (int i=0; i<=numberOfChild; i++) {
         NSMutableArray *selectedParent = [[NSMutableArray alloc]init];
         
         for (int i = 0 ; i<2; i++) {
+            sumOfPropability = 0;
+            double rand = arc4random_uniform(numberToRand);
+            for (CarView *car in oldPopulation) {
+                CGFloat numberToADD = (1/ ([Alghoritm getSmiliarity:car withModel:model]/sumOfFitness));
+                sumOfPropability += numberToADD;
+                if (rand <= sumOfPropability) {
+                    [selectedParent addObject:car];
+                    break;
+                }
+            }
+        }
+        
+        if (selectedParent.count == 1) {
             sumOfPropability = 0;
             double rand = arc4random_uniform(numberToRand);
             for (CarView *car in oldPopulation) {
