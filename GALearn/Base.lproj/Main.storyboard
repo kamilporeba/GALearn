@@ -48,19 +48,7 @@
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nas-ft-WMi" customClass="CarView">
                                                     <rect key="frame" x="0.0" y="0.0" width="158" height="118"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BNf-AN-lPd">
-                                                            <rect key="frame" x="0.0" y="89" width="42" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <color key="textColor" red="0.92549019610000005" green="0.0" blue="0.54901960780000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstItem="BNf-AN-lPd" firstAttribute="leading" secondItem="Nas-ft-WMi" secondAttribute="leading" id="Zhu-Xh-Uxx"/>
-                                                        <constraint firstAttribute="bottom" secondItem="BNf-AN-lPd" secondAttribute="bottom" id="jD7-Hk-JWY"/>
-                                                    </constraints>
                                                 </view>
                                             </subviews>
                                         </view>
@@ -72,13 +60,12 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="carView" destination="Nas-ft-WMi" id="ZSw-iM-xbN"/>
-                                            <outlet property="similarity" destination="BNf-AN-lPd" id="He2-3o-dNX"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="NkY-Ux-jHz"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="apO-xj-QgH"/>
-                                    <outlet property="prefetchDataSource" destination="BYZ-38-t0r" id="Sat-qo-Oxd"/>
                                 </connections>
                             </collectionView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Cd-2r-umC">
@@ -345,25 +332,18 @@
                                 <rect key="frame" x="456" y="160" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z1C-4T-2YR">
-                                <rect key="frame" x="456" y="158" width="67" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z1C-4T-2YR">
+                                <rect key="frame" x="456" y="158" width="100.5" height="30"/>
                                 <state key="normal" title="Resetuj"/>
                                 <connections>
                                     <action selector="reset:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jve-0Y-ZE8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mRn-xE-rKJ">
-                                <rect key="frame" x="590" y="158" width="67" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mRn-xE-rKJ">
+                                <rect key="frame" x="556.5" y="158" width="100.5" height="30"/>
                                 <state key="normal" title="Ewoluuj"/>
                                 <connections>
                                     <action selector="evolution:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jMf-Bg-ypd"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlo-mL-z6x">
-                                <rect key="frame" x="523" y="158" width="67" height="30"/>
-                                <state key="normal" title="Start"/>
-                                <connections>
-                                    <action selector="start:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0uS-Ua-saN"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -374,12 +354,9 @@
                             <constraint firstItem="z1C-4T-2YR" firstAttribute="leading" secondItem="tci-ml-fj7" secondAttribute="leading" id="GNN-wv-yH2"/>
                             <constraint firstItem="tci-ml-fj7" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="H6V-cX-Qd6"/>
                             <constraint firstItem="tci-ml-fj7" firstAttribute="leading" secondItem="Klh-XY-uHU" secondAttribute="trailing" constant="20" id="Mlb-vu-oas"/>
-                            <constraint firstItem="hlo-mL-z6x" firstAttribute="leading" secondItem="z1C-4T-2YR" secondAttribute="trailing" id="OPQ-ED-6am"/>
-                            <constraint firstItem="hlo-mL-z6x" firstAttribute="centerY" secondItem="z1C-4T-2YR" secondAttribute="centerY" id="RLd-6O-HnA"/>
-                            <constraint firstItem="hlo-mL-z6x" firstAttribute="width" secondItem="z1C-4T-2YR" secondAttribute="width" id="Whk-Bj-tWK"/>
                             <constraint firstItem="z1C-4T-2YR" firstAttribute="top" secondItem="tci-ml-fj7" secondAttribute="bottom" id="bWR-cN-uGL"/>
-                            <constraint firstItem="mRn-xE-rKJ" firstAttribute="leading" secondItem="hlo-mL-z6x" secondAttribute="trailing" id="cEB-HP-en1"/>
                             <constraint firstAttribute="trailing" secondItem="tci-ml-fj7" secondAttribute="trailing" constant="10" id="cnb-tY-FR5"/>
+                            <constraint firstItem="mRn-xE-rKJ" firstAttribute="leading" secondItem="z1C-4T-2YR" secondAttribute="trailing" id="ffS-gd-zaG"/>
                             <constraint firstItem="Klh-XY-uHU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="i7o-P9-53C"/>
                             <constraint firstItem="5Cd-2r-umC" firstAttribute="top" secondItem="z1C-4T-2YR" secondAttribute="bottom" id="lHU-yI-7i8"/>
                             <constraint firstItem="mRn-xE-rKJ" firstAttribute="trailing" secondItem="tci-ml-fj7" secondAttribute="trailing" id="mm8-bT-vyd"/>
@@ -394,6 +371,7 @@
                     <connections>
                         <outlet property="childCount" destination="NxW-n5-QeZ" id="iA7-O6-D3W"/>
                         <outlet property="collectionView" destination="Klh-XY-uHU" id="Rn3-E1-vpO"/>
+                        <outlet property="evolute" destination="mRn-xE-rKJ" id="etZ-oN-NL5"/>
                         <outlet property="iterationCount" destination="KBO-DS-oO1" id="3Cm-3V-dJw"/>
                         <outlet property="modelCarView" destination="tci-ml-fj7" id="xTo-nG-5d6"/>
                         <outlet property="mutation" destination="4BC-aj-MNz" id="Tqa-8K-gI8"/>
@@ -406,6 +384,12 @@
                         <outletCollection property="countLabels" destination="o18-tN-SAW" id="LDp-HK-aaM"/>
                         <outletCollection property="countLabels" destination="aT8-bL-gaj" id="lwf-ma-05t"/>
                         <outletCollection property="countLabels" destination="HRu-RV-iX7" id="vOD-iy-9le"/>
+                        <outletCollection property="sliders" destination="KBO-DS-oO1" id="osT-J7-58N"/>
+                        <outletCollection property="sliders" destination="aWT-gW-LOg" id="5mD-Mx-MyF"/>
+                        <outletCollection property="sliders" destination="4BC-aj-MNz" id="kBi-Tr-2RG"/>
+                        <outletCollection property="sliders" destination="iAa-rQ-h5g" id="vsG-rY-1DV"/>
+                        <outletCollection property="sliders" destination="NxW-n5-QeZ" id="dav-bW-E14"/>
+                        <outletCollection property="sliders" destination="J7f-Sk-Iax" id="X3n-QT-NC7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

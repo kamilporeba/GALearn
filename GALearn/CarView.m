@@ -52,8 +52,7 @@
     [self addCarroseryWithPoint:CGPointMake(firstPointX, firstPointY) andSecond:CGPointMake(secondPointX, secondPointY) andThird:CGPointMake(thirdPointX, thirdPointY) andFourth:CGPointMake(fourthPointX, fourthPointY) isEditableView:isEditable];
 }
 
-NSString * binaryStringFromInteger( int number )
-{
+NSString * binaryStringFromInteger( int number ) {
     NSMutableString * string = [[NSMutableString alloc] init];
     
     int spacing = pow( 2, 3 );

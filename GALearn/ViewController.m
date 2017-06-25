@@ -33,6 +33,8 @@ typedef enum : NSUInteger {
 @property (weak, nonatomic) IBOutlet UISlider *stopTrigger;
 
 @property (nonatomic, strong) IBOutletCollection(UILabel) NSArray *countLabels;
+@property (nonatomic, strong) IBOutletCollection(UISlider) NSArray *sliders;
+@property (weak, nonatomic) IBOutlet UIButton *evolute;
 
 @property (nonatomic,strong) NSMutableArray<CarView *> *populationArray;
 @property (nonatomic, strong) NSTimer *timer;
@@ -45,6 +47,7 @@ typedef enum : NSUInteger {
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     [self.modelCarView buildCarFromGenotype:@"0000000000000000000000000001101100000000000000000000000000011101000000000000000000000000100000000000000000000000000000000001010000000000000000000000000010000100000000000000000000000000011001000000000000000000000000000001111000000000000000000000000001100001" andEditable:YES];
+    [self setValueLabel];
     
 }
 
@@ -66,29 +69,41 @@ typedef enum : NSUInteger {
 - (IBAction)reset:(id)sender {
     [self.populationArray removeAllObjects];
     [self.collectionView reloadData];
+    [self.evolute setUserInteractionEnabled:YES];
 }
 
 - (IBAction)didSlide:(id)sender {
     UISlider *slider = (UISlider *) sender;
-    UILabel *label =  (UILabel *)[self.countLabels objectAtIndex:slider.tag];
-    if (slider.tag == Mutation) {
-        [label setText: [NSString stringWithFormat:@"%.2f", slider.value]];
-        
-    } else {
-        [label setText: [NSString stringWithFormat:@"%d",(int) slider.value]];
-    }
+    [self setValueLabel];
     switch (slider.tag) {
+        case PopulationSize:
+            self.childCount.maximumValue = slider.value *0.4;
+            break;
         case ChildAmount:
             numberOfChild =(int) self.childCount.value;
             break;
         case Mutation:
+            mutationRate = self.mutation.value;
             break;
         case Selection:
             selectionPression = (int) self.selectionProbability.value;
-            break;
         default:
             break;
     }
+}
+
+-(void)setValueLabel {
+    for (int i=0; i<self.sliders.count; i++) {
+        UILabel *label = [self.countLabels objectAtIndex:i];
+        UISlider *slider = [self.sliders objectAtIndex:i];
+        if (slider.tag == Mutation) {
+            [label setText: [NSString stringWithFormat:@"%.2f", slider.value]];
+            
+        } else {
+            [label setText: [NSString stringWithFormat:@"%d",(int) slider.value]];
+        }
+    }
+   
 }
 
 - (IBAction)IterationInfo:(id)sender {
@@ -132,8 +147,8 @@ typedef enum : NSUInteger {
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CarCollectionViewCell *carCell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([CarCollectionViewCell class]) forIndexPath:indexPath];
     [carCell setViewWithGenotype:[self.populationArray objectAtIndex:indexPath.row].genotype];
-    [carCell.similarity setText:[NSString stringWithFormat:@"%f",[Alghoritm getSmiliarity:carCell.carView withModel:self.modelCarView]]];
-    if (carCell.carView.isWinner) {
+//    [carCell.similarity setText:[NSString stringWithFormat:@"%f",[Alghoritm getSmiliarity:carCell.carView withModel:self.modelCarView]]];
+    if ([self.populationArray objectAtIndex:indexPath.row].isWinner) {
         [carCell.carView setBackgroundColor:[UIColor greenColor]];
     } else {
          [carCell.carView setBackgroundColor:[UIColor whiteColor]];
@@ -157,22 +172,31 @@ typedef enum : NSUInteger {
 
 -(void)evolutionOfOneGeneration {
     self.populationArray = [Alghoritm generateNewPopulationWithOldPopulation:self.populationArray andModel:self.modelCarView];
+    
+    NSArray *sortedPopulation = [self.populationArray sortedArrayUsingComparator:^NSComparisonResult(CarView *  _Nonnull firstCar, CarView *  _Nonnull secondCar) {
+        return [Alghoritm isCar:secondCar isFitterThen:firstCar toModel:self.modelCarView];
+    }];
+    self.populationArray = [[NSMutableArray alloc] initWithArray:sortedPopulation];
     [self.collectionView reloadData];
     [self checkPopulation];
 }
 
 -(void)checkPopulation {
-    for (CarView *car  in self.populationArray) {
-        if ([Alghoritm getSmiliarity:car withModel:self.modelCarView] <= 14){//(int)self.stopTrigger.value) {
-            [self.timer invalidate];
-            [car setIsWinner:YES];
-            NSLog(@"Sukcess");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.collectionView reloadData];
-            });
-            break;
-        }
+    NSArray *sortedPopulation = [self.populationArray sortedArrayUsingComparator:^NSComparisonResult(CarView *  _Nonnull firstCar, CarView *  _Nonnull secondCar) {
+        return [Alghoritm isCar:secondCar isFitterThen:firstCar toModel:self.modelCarView];
+    }];
+    
+    if ([Alghoritm getSmiliarity:sortedPopulation.firstObject withModel:self.modelCarView] <= (int)self.stopTrigger.value ) {
+        [self.timer invalidate];
+        [sortedPopulation.firstObject setIsWinner:YES];
+        NSLog(@"Sukcess");
+        [self.evolute setUserInteractionEnabled:NO];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+
     }
+    
 }
 
 -(void)refreshWithNewParameters {

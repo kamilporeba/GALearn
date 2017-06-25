@@ -11,6 +11,7 @@
 
 static int numberOfChild = 7;
 static int selectionPression = 2;
+static float mutationRate = 0.23;
 
 @interface Alghoritm : NSObject
 + (NSString *)generateRandomeGenotypeWithMaxSize:(int) maxSize;

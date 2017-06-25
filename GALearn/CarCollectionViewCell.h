@@ -11,7 +11,6 @@
 
 @interface CarCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet CarView *carView;
-@property (weak, nonatomic) IBOutlet UILabel *similarity;
 
 -(void)setViewWithGenotype:(NSString *)genotype;
 @end

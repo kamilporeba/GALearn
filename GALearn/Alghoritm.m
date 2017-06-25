@@ -10,10 +10,7 @@
 #import "CarView.h"
 #import "NSMutableArray+Shuffle.h"
 
-
 @implementation Alghoritm
-
-
 
 + (NSString *)generateRandomeGenotypeWithMaxSize:(int) maxSize {
     NSMutableString *genotype = [[NSMutableString alloc] init];
@@ -61,11 +58,12 @@
     NSString * childGenotype = [[firstParentGenotype substringWithRange:NSMakeRange(0, firstPart)] stringByAppendingString:[secondParentGenotype substringWithRange:NSMakeRange(firstPart, secondParentGenotype.length - firstPart)]];
     [childCar buildCarFromGenotype:childGenotype];
     
-    if (RANDOM() < MUTATION_THRESHOLD) {
+    if (RANDOM() < (ARC4RANDOM_MAX * mutationRate)) {
         [Alghoritm mutate:childCar];
     }
     return childCar;
 }
+
 
 +(NSArray<CarView *> *)getBestCarFromPopulation:(NSArray<CarView *> *)population andModel:(CarView *)model  {
     

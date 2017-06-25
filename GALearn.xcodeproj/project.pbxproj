@@ -168,7 +168,7 @@
 				TargetAttributes = {
 					8E4B058B1E607F070046D1DB = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = EQ975ENJ75;
+						DevelopmentTeam = XY8ZXPE8XE;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -343,11 +343,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = EQ975ENJ75;
+				DEVELOPMENT_TEAM = XY8ZXPE8XE;
 				GCC_PREFIX_HEADER = "/Users/kamil/Desktop/GALearn/GALearn-Prefix.pch";
 				INFOPLIST_FILE = GALearn/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Kamil-Poreba.GALearn";
+				PRODUCT_BUNDLE_IDENTIFIER = "Kamil-Poreba.GALearnn";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -356,11 +357,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = EQ975ENJ75;
+				DEVELOPMENT_TEAM = XY8ZXPE8XE;
 				GCC_PREFIX_HEADER = "/Users/kamil/Desktop/GALearn/GALearn-Prefix.pch";
 				INFOPLIST_FILE = GALearn/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Kamil-Poreba.GALearn";
+				PRODUCT_BUNDLE_IDENTIFIER = "Kamil-Poreba.GALearnn";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
